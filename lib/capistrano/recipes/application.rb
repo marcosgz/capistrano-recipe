@@ -2,7 +2,6 @@ Capistrano::Configuration.instance(:must_exist).load do
 
   set :app_setup_defaults, %w(app:create:dirs app:create:application_server db:setup)
   set :app_setup_aditional, [] unless exists?(:app_setup_aditional)
-  set :local_rails_root, File.expand_path('../../../../', __FILE__)
 
   set :user, 'app' unless exists?(:user)
   set :group, 'app' unless exists?(:group)
