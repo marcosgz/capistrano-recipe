@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "capistrano-recipe"
-  s.version     = "0.0.1"
+  s.version     = "0.0.2"
   s.authors     = ["Marcos G. Zimmermann"]
   s.email       = ["mgzmaster@gmail.com"]
   s.homepage    = "https://github.com/marcosgz/capistrano-recipe"
