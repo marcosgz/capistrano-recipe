@@ -36,12 +36,12 @@ Capistrano::Configuration.instance(:must_exist).load do
 
     desc "Inspect Phusion Passenger's memory usage."
     task :memory, :roles => :app do
-      run "sudo passenger-memory-stats"
+      run "#{try_sudo} passenger-memory-stats"
     end
 
     desc "Inspect Phusion Passenger's internal status."
     task :status, :roles => :app do
-      run "sudo passenger-status"
+      run "#{try_sudo} passenger-status"
     end
 
     desc "Remove passenger config"
