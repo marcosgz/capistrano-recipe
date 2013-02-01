@@ -43,7 +43,7 @@ Capistrano::Configuration.instance(:must_exist).load do
 
     namespace :setup do
       desc "Upload configs"
-      task :default, :roles => :db do
+      task :default, :roles => :app do
         if exists?(:thin_setup_settings)
           set(:recipe_settings) { thin_template_settings }
           put template.render(fetch(:thin_template)), fetch(:thin_remote_file)

@@ -194,7 +194,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   namespace :newrelic do
     namespace :setup do
       desc "Upload configs"
-      task :default, :roles => :db do
+      task :default, :roles => :app do
         if exists?(:newrelic_setup_settings)
           set(:recipe_settings) { newrelic_template_settings }
           put template.render(fetch(:newrelic_template)), fetch(:newrelic_remote_file)

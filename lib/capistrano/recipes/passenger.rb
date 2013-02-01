@@ -62,7 +62,7 @@ Capistrano::Configuration.instance(:must_exist).load do
 
     namespace :setup do
       desc "Upload configs"
-      task :default, :roles => :db do
+      task :default, :roles => :app do
         if exists?(:passenger_setup_settings)
           run "mkdir -p #{ passenger_template_settings.slice('sites_available', 'sites_enabled').map{|k,v| v}.join(' ') }"
           set(:recipe_settings) { passenger_template_settings }

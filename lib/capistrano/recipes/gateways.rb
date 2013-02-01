@@ -17,7 +17,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   namespace :gateways do
     namespace :setup do
       desc "Upload configs"
-      task :default, :roles => :db do
+      task :default, :roles => :app do
         if exists?(:gateways_setup_settings)
           set(:recipe_settings) { fetch(:gateways_setup_settings, {}) }
           put template.render(fetch(:gateways_template)), fetch(:gateways_remote_file)

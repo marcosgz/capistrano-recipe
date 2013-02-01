@@ -16,7 +16,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   namespace :uploader do
     namespace :setup do
       desc "Upload configs"
-      task :default, :roles => :db do
+      task :default, :roles => :app do
         if exists?(:uploader_setup_settings)
           set :recipe_settings, fetch(:uploader_setup_settings, {})
           put template.render(fetch(:uploader_template)), fetch(:uploader_remote_file)

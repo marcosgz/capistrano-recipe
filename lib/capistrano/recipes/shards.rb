@@ -26,7 +26,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   namespace :shards do
     namespace :setup do
       desc "Upload configs"
-      task :default, :roles => :db do
+      task :default, :roles => :app do
         if exists?(:shards_setup_settings)
           set(:recipe_settings) do
             {

@@ -13,7 +13,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   namespace :mailer do
     namespace :setup do
       desc "Upload configs"
-      task :default, :roles => :db do
+      task :default, :roles => :app do
         if exists?(:mailer_setup_settings)
           set :recipe_settings, fetch(:mailer_setup_settings, {})
           put template.render(fetch(:mailer_template)), fetch(:mailer_remote_file)

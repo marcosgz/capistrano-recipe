@@ -23,7 +23,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   namespace :settler do
     namespace :setup do
       desc "Upload configs"
-      task :default, :roles => :db do
+      task :default, :roles => :app do
         if exists?(:settler_setup_settings)
            set(:recipe_settings) { settler_template_settings }
            put template.render(fetch(:settler_template)), fetch(:settler_remote_file)

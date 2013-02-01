@@ -75,7 +75,7 @@ Capistrano::Configuration.instance(:must_exist).load do
     # *port* 80
     namespace :setup do
       desc "Upload configs"
-      task :default, :roles => :db do
+      task :default, :roles => :app do
         if exists?(:unicorn_setup_settings)
           set(:recipe_settings) { unicorn_template_settings }
           put template.render(fetch(:unicorn_template)), File.join(shared_path, 'config/unicorn.rb')

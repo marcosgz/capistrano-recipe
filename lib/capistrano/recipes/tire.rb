@@ -14,7 +14,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   namespace :tire do
     namespace :setup do
       desc "Upload configs"
-      task :default, :roles => :db do
+      task :default, :roles => :app do
         if exists?(:tire_setup_settings)
           set :recipe_settings, fetch(:tire_setup_settings, {})
           put template.render(fetch(:tire_template)), fetch(:tire_remote_file)
