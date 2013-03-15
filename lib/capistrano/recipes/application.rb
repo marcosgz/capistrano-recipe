@@ -19,11 +19,11 @@ Capistrano::Configuration.instance(:must_exist).load do
     namespace :create do
       task :dirs, :roles => :app do
         deploy.setup
-        commands = %w(config uploads backup bundle pids tmp/cache public/cache public/assets).map do |path|
+        commands = %w(config uploads backup bundle pids tmp/cache public/cache).map do |path|
           "if [ ! -d '#{path}' ]; then mkdir -p #{path}; fi;"
         end
         run "cd #{shared_path}; #{commands.join(' ')}"
-        run "chmod 777 #{shared_path}/public/cache #{shared_path}/public/assets #{shared_path}/tmp/cache"
+        run "chmod 777 #{shared_path}/public/cache #{shared_path}/tmp/cache"
       end
 
 
