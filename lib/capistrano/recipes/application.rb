@@ -29,7 +29,7 @@ Capistrano::Configuration.instance(:must_exist).load do
 
       task :application_server, :roles => :app do
         # App Server
-        case fetch(:app_server, nil)
+        case fetch(:app_server, nil).to_s
         when 'passenger'
           passenger.setup
         when 'unicorn'
@@ -37,6 +37,8 @@ Capistrano::Configuration.instance(:must_exist).load do
           unicorn.monit.setup
         when 'thin'
           thin.setup
+        else
+          puts "WARNING: set :app_server with (passenger, unicorn or thin) to automatically run the <server>:setup task"
         end
       end
     end
