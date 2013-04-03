@@ -1,16 +1,27 @@
-# Example
-# =======
-#
-# newrelic_setup_settings:
-#   common:
-#     app_name: AppName
-#     license_key: secret
-#   staging:
-#     app_name: AppName (Staging)
-
 Capistrano::Configuration.instance(:must_exist).load do
-  set(:newrelic_remote_file) { File.join(shared_path, 'config/newrelic.yml') } unless exists?(:newrelic_remote_file)
-  set(:newrelic_template, 'newrelic.yml.erb') unless exists?(:newrelic_template)
+  # Required attributes
+  # ===================
+  # *license_key*  123xyz
+  # *app_name* Production App
+  namespace :newrelic do
+    namespace :setup do
+      desc "Upload configs"
+      task :default, :roles => :app do
+        if exists?(:newrelic_setup_settings)
+          set(:recipe_settings) { newrelic_template_settings }
+          puts template.render(_newrelic_template), _newrelic_remote_path
+        else
+          puts "[FATAL] - Newrelic template settings were not found"
+          abort
+        end
+      end
+
+      desc "Download configs"
+      task :get, :roles => :db do
+        download _newrelic_remote_path, _newrelic_local_path
+      end
+    end
+  end
 
   def newrelic_setup_defaults
     {
@@ -178,36 +189,19 @@ Capistrano::Configuration.instance(:must_exist).load do
     }
   end
 
-  # task: `newrelic:setup'
   def newrelic_template_settings
-    fetch(:newrelic_setup_settings, {}).reverse_merge(
-      newrelic_setup_defaults.keys.inject({}) {|r, e| r.merge Hash[e, Hash.new] }
-    ).inject({}) do |r, (k,v)|
-      r.merge Hash[k, v.reverse_merge(newrelic_setup_defaults[k] || {})]
-    end
+    newrelic_setup_defaults.deep_merge(HashWithIndifferentAccess.new(fetch(:newrelic_setup_settings, {})))
   end
 
-  # Required attributes
-  # ===================
-  # *license_key*  123xyz
-  # *app_name* Production App
-  namespace :newrelic do
-    namespace :setup do
-      desc "Upload configs"
-      task :default, :roles => :app do
-        if exists?(:newrelic_setup_settings)
-          set(:recipe_settings) { newrelic_template_settings }
-          put template.render(fetch(:newrelic_template)), fetch(:newrelic_remote_file)
-        else
-          puts "[FATAL] - Newrelic template settings were not found"
-          abort
-        end
-      end
+  def _newrelic_remote_path
+    File.join(shared_path, fetch(:newrelic_remote_path, 'config/newrelic.yml'))
+  end
 
-      desc "Download configs"
-      task :get, :roles => :db do
-        download fetch(:newrelic_remote_file), File.join(local_rails_root, 'config/newrelic.yml')
-      end
-    end
+  def _newrelic_local_path
+    File.join(local_rails_root, fetch(:newrelic_local_path, 'config/newrelic.yml'))
+  end
+
+  def _newrelic_template
+    fetch(:newrelic_template, 'newrelic.yml.erb')
   end
 end

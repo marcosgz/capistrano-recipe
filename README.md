@@ -39,3 +39,16 @@ set :mailer_setup_settings, {
   password: "secret"
 }
 ```
+
+### Newrelic
+```ruby
+set :newrelic_setup_settings, {
+  common: {
+    app_name: 'AppName',
+    license_key: 'secret'
+  },
+  staging: {
+    app_name: 'AppName (Staging)'
+  }
+}
+```
