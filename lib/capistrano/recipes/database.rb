@@ -51,11 +51,11 @@ Capistrano::Configuration.instance(:must_exist).load do
   end
 
   def _database_remote_path
-    fetch(:database_remote_path, File.join(shared_path, 'config/database.yml') )
+    File.join(shared_path, fetch(:database_remote_path, 'config/database.yml'))
   end
 
   def _database_local_path
-    fetch(:database_local_path, File.join(local_rails_root, 'config/database.yml') )
+    File.join(local_rails_root, fetch(:database_local_path, 'config/database.yml'))
   end
 
   def _database_template
