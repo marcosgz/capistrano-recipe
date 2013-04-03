@@ -60,3 +60,21 @@ set :passenger_setup_settings, {
   port: 80
 }
 ```
+
+### Settler
+```ruby
+set :settler_setup_settings, {
+  name: 'String Text',      # "name"        =>  {"alt"=>"name", "value"=>"String Text"}
+  price: 100.0,             # "price"       =>  {"alt"=>"price", "value"=>"100.0", "typecast"=>"float"}
+  views: 9,                 # "views"       =>  {"alt"=>"views", "value"=>"9", "typecast"=>"integer"}
+  approved: true,           # "approved"    =>  {"alt"=>"approved", "value"=>"true", "typecast"=>"boolean"}
+  deleted: false,           # "deleted"     =>  {"alt"=>"deleted", "value"=>"false", "typecast"=>"boolean"}
+  published_at: Time.now,   # "published_at"=>  {"alt"=>"published_at", "value"=>"2013-04-03 16:25:26 -0300", "typecast"=>"datetime"}
+  password: {               # "password"    =>  {"alt"=>"Password", "value"=>"secret", "typecast"=>"password"}
+    alt: 'Password',
+    value: 'secret',
+    typecast: 'password'
+  }
+}
+
+```
