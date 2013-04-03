@@ -116,5 +116,11 @@ set :uploader_setup_settings, {
     fog_directory: 'public_assets'
   }
 }
+```
 
+### Unicorn
+```ruby
+set :unicorn_setup_settings, {
+  port: 80
+}
 ```
