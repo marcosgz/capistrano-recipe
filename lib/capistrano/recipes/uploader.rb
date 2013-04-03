@@ -30,7 +30,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   end
 
   def uploader_template_settings
-    uploader_setup_defaults.deep_merge(HashWithIndifferentAccess.new(fetch(:uploader_setup_settings, {})))
+    DeepToHash.to_hash uploader_setup_defaults.deep_merge(fetch(:uploader_setup_settings, {}))
   end
 
   def _uploader_remote_file

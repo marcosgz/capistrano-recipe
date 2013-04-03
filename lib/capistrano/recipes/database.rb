@@ -47,7 +47,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   end
 
   def database_template_settings
-    database_setup_defaults.deep_merge(HashWithIndifferentAccess.new(fetch(:db_setup_settings, {})))
+    DeepToHash.to_hash database_setup_defaults.deep_merge(fetch(:db_setup_settings, {}))
   end
 
   def _database_remote_path

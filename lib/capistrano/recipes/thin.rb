@@ -44,7 +44,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   end
 
   def thin_template_settings
-    thin_setup_defaults.deep_merge(HashWithIndifferentAccess.new(fetch(:thin_setup_settings, {})))
+    DeepToHash.to_hash thin_setup_defaults.deep_merge(fetch(:thin_setup_settings, {}))
   end
 
   def _thin_cmd(action)

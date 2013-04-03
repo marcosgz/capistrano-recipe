@@ -4,7 +4,7 @@ Capistrano::Configuration.instance(:must_exist).load do
       desc "Upload configs"
       task :default, :roles => :app do
         if exists?(:mailer_setup_settings)
-          set(:recipe_settings) { HashWithIndifferentAccess.new(fetch(:mailer_setup_settings, {})) }
+          set(:recipe_settings) { fetch(:mailer_setup_settings, {}) }
           put template.render(_mailer_template), _mailer_remote_file
         else
           puts "[FATAL] - Mailers template settings were not found"

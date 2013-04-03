@@ -20,7 +20,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   end
 
   def settler_template_settings
-    fetch(:settler_setup_settings, {}).inject(HashWithIndifferentAccess.new({})) do |r, (k,v)|
+    fetch(:settler_setup_settings, {}).inject({}) do |r, (k,v)|
       case v.class.name
       when 'Hash', 'ActiveSupport::HashWithIndifferentAccess'
         r[k] = v

@@ -5,7 +5,7 @@ Capistrano::Configuration.instance(:must_exist).load do
       desc "Upload configs"
       task :default, :roles => :app do
         if exists?(:gateways_setup_settings)
-          set(:recipe_settings) { HashWithIndifferentAccess.new(fetch(:gateways_setup_settings, {})) }
+          set(:recipe_settings) { fetch(:gateways_setup_settings, {}) }
           put template.render(_gateways_template), _gateways_remote_file
         else
           puts "[FATAL] - Gateways template settings were not found"

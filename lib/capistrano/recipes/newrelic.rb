@@ -24,7 +24,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   end
 
   def newrelic_setup_defaults
-    {
+    HashWithIndifferentAccess.new({
       'common'      => {
         # ============================== LICENSE KEY ===============================
 
@@ -186,11 +186,11 @@ Capistrano::Configuration.instance(:must_exist).load do
       'staging'     => {'developer_mode'  => true},
       'test'        => {},
       'production'  => {'monitor_mode'    => true}
-    }
+    })
   end
 
   def newrelic_template_settings
-    newrelic_setup_defaults.deep_merge(HashWithIndifferentAccess.new(fetch(:newrelic_setup_settings, {})))
+    DeepToHash.to_hash newrelic_setup_defaults.deep_merge(fetch(:newrelic_setup_settings, {}))
   end
 
   def _newrelic_remote_path

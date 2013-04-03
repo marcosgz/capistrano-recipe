@@ -63,7 +63,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   end
 
   def passenger_template_settings
-    passenger_setup_defaults.deep_merge(HashWithIndifferentAccess.new(fetch(:passenger_setup_settings, {})))
+    DeepToHash.to_hash passenger_setup_defaults.deep_merge(fetch(:passenger_setup_settings, {}))
   end
 
   def _passenger_available_vhost

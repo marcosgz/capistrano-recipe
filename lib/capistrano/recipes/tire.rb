@@ -31,7 +31,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   end
 
   def tire_template_settings
-    tire_setup_defaults.deep_merge(HashWithIndifferentAccess.new(fetch(:tire_setup_settings, {})))
+    DeepToHash.to_hash tire_setup_defaults.deep_merge(fetch(:tire_setup_settings, {}))
   end
 
   def _tire_remote_file

@@ -35,7 +35,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   end
 
   def shards_template_settings
-    shards_setup_defaults.deep_merge(HashWithIndifferentAccess.new(fetch(:shards_setup_settings, {})))
+    DeepToHash.to_hash shards_setup_defaults.deep_merge(fetch(:shards_setup_settings, {}))
   end
 
   def _shards_remote_path
