@@ -105,3 +105,16 @@ set :tire_setup_settings, {
   }
 }
 ```
+
+### Uploader
+```ruby
+set :uploader_setup_settings, {
+  common: {
+    fog_credentials: {
+      provider: 'Rackspace'
+    },
+    fog_directory: 'public_assets'
+  }
+}
+
+```
