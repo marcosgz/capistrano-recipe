@@ -96,3 +96,12 @@ set :thin_setup_settings, {
   port: 80
 }
 ```
+
+### Tire
+```ruby
+set :tire_setup_settings, {
+  common: {
+    url: "http://localhost:9200"
+  }
+}
+```
