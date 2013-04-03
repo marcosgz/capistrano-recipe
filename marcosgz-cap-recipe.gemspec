@@ -17,5 +17,5 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency "capistrano", "> 2.0.0"
-  s.add_development_dependency "pry", "~> 0.9.11.4"
+  s.add_dependency "marcosgz-cap-template", "~> 0.0.3"
 end
