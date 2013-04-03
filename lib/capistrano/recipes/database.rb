@@ -1,11 +1,3 @@
-# Example
-# =======
-#
-# db_setup_settings:
-#   common:
-#     host: 127.0.0.1
-#     database: db_name
-
 Capistrano::Configuration.instance(:must_exist).load do
   # Required attributes
   # ===================
@@ -39,11 +31,8 @@ Capistrano::Configuration.instance(:must_exist).load do
         'username'  => fetch(:database_username) { user },
         'password'  => self[:database_password],
         'host'      => fetch(:database_host, '127.0.1.1')
-      },
-      'development' => {},
-      'production'  => {},
-      'test'        => {}
-    })
+      }
+    }.reverse_merge(default_rails_environments_hash))
   end
 
   def database_template_settings

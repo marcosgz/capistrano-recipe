@@ -21,12 +21,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   end
 
   def gateways_setup_defaults
-    HashWithIndifferentAccess.new({
-      'common'      => {},
-      'development' => {},
-      'production'  => {},
-      'test'        => {}
-    })
+    HashWithIndifferentAccess.new({'common'=>{}}.reverse_merge(default_rails_environments_hash))
   end
 
   def gateways_template_settings

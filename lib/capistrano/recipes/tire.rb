@@ -21,13 +21,10 @@ Capistrano::Configuration.instance(:must_exist).load do
 
   def tire_setup_defaults
     HashWithIndifferentAccess.new({
-      'common'      => {
+      'common'=>{
         'url' => 'http://localhost:9200'
-      },
-      'development' => {},
-      'production'  => {},
-      'test'        => {}
-    })
+      }
+    }.reverse_merge(default_rails_environments_hash))
   end
 
   def tire_template_settings

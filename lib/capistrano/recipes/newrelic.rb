@@ -9,7 +9,7 @@ Capistrano::Configuration.instance(:must_exist).load do
       task :default, :roles => :app do
         if exists?(:newrelic_setup_settings)
           set(:recipe_settings) { newrelic_template_settings }
-          puts template.render(_newrelic_template), _newrelic_remote_path
+          put template.render(_newrelic_template), _newrelic_remote_path
         else
           puts "[FATAL] - Newrelic template settings were not found"
           abort
@@ -186,7 +186,7 @@ Capistrano::Configuration.instance(:must_exist).load do
       'staging'     => {'developer_mode'  => true},
       'test'        => {},
       'production'  => {'monitor_mode'    => true}
-    })
+    }.reverse_merge(default_rails_environments_hash))
   end
 
   def newrelic_template_settings

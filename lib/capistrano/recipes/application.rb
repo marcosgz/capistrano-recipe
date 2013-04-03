@@ -74,4 +74,12 @@ Capistrano::Configuration.instance(:must_exist).load do
 
   end
 
+
+  def default_rails_environments_hash
+    default_rails_environments.inject({}){|r, v| r.merge Hash[v, {}] }
+  end
+
+  def default_rails_environments
+    fetch(:rails_environments, %w(production development staging test))
+  end
 end

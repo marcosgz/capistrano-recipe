@@ -20,12 +20,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   end
 
   def mailer_setup_defaults
-    HashWithIndifferentAccess.new({
-      'common'      => {},
-      'development' => {},
-      'production'  => {},
-      'test'        => {}
-    })
+    HashWithIndifferentAccess.new({'common'=>{}}.reverse_merge(default_rails_environments_hash))
   end
 
   def mailer_template_settings

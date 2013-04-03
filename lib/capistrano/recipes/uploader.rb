@@ -21,12 +21,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   end
 
   def uploader_setup_defaults
-    HashWithIndifferentAccess.new({
-      'common'      => {},
-      'development' => {},
-      'production'  => {},
-      'test'        => {}
-    })
+    HashWithIndifferentAccess.new({'common'=>{}}.reverse_merge(default_rails_environments_hash))
   end
 
   def uploader_template_settings
