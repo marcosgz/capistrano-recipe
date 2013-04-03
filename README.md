@@ -6,11 +6,32 @@ Under development
 require 'capistrano/recipe'
 ```
 
-### Required configs
+## Required configs
 ```ruby
 set :user, 'admin'
 set :group, 'admin'
 set :domain, 'www.example.com'
+```
+
+### Unicorn
+```ruby
+set :unicorn_setup_settings, {
+  port: 80
+}
+```
+
+### Passenger
+```ruby
+set :passenger_setup_settings, {
+  port: 80
+}
+```
+
+### Thin
+```ruby
+set :thin_setup_settings, {
+  port: 80
+}
 ```
 
 ### Database
@@ -26,9 +47,11 @@ set :db_setup_settings, {
 ### Gateways
 ```ruby
 set :gateways_setup_settings, {
-  example: {
-    username: 'foo',
-    password: 'bar'
+  common: {
+    example: {
+      username: 'foo',
+      password: 'bar'
+    }
   }
 }
 ```
@@ -36,8 +59,10 @@ set :gateways_setup_settings, {
 ### Mailers
 ```ruby
 set :mailer_setup_settings, {
-  user_name: "email@example.com",
-  password: "secret"
+  common: {
+    user_name: "email@example.com",
+    password: "secret"
+  }
 }
 ```
 
@@ -51,13 +76,6 @@ set :newrelic_setup_settings, {
   staging: {
     app_name: 'AppName (Staging)'
   }
-}
-```
-
-### Passenger
-```ruby
-set :passenger_setup_settings, {
-  port: 80
 }
 ```
 
@@ -90,13 +108,6 @@ set :shards_setup_settings, {
 }
 ```
 
-### Thin
-```ruby
-set :thin_setup_settings, {
-  port: 80
-}
-```
-
 ### Tire
 ```ruby
 set :tire_setup_settings, {
@@ -115,12 +126,5 @@ set :uploader_setup_settings, {
     },
     fog_directory: 'public_assets'
   }
-}
-```
-
-### Unicorn
-```ruby
-set :unicorn_setup_settings, {
-  port: 80
 }
 ```
