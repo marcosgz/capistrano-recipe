@@ -78,3 +78,15 @@ set :settler_setup_settings, {
 }
 
 ```
+
+### Shards
+```ruby
+set :shards_setup_settings, {
+  databases: {
+    production:{
+      slave1: {}
+    }
+  }
+}
+```
+
