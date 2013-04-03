@@ -1,14 +1,10 @@
 Capistrano::Configuration.instance(:must_exist).load do
 
   set :app_setup_defaults, %w(app:create:dirs app:create:application_server db:setup)
-  set :app_setup_aditional, [] unless exists?(:app_setup_aditional)
-
-  set :user, 'app' unless exists?(:user)
-  set :group, 'app' unless exists?(:group)
 
   namespace :app do
     task :setup, :roles => :app do
-      (fetch(:app_setup_defaults)+fetch(:app_setup_aditional)).each do |name|
+      (fetch(:app_setup_defaults)+_app_setup_aditional).each do |name|
         if (t=top.find_task(name))
           execute_task(t)
         end
@@ -74,6 +70,17 @@ Capistrano::Configuration.instance(:must_exist).load do
 
   end
 
+  def _app_setup_aditional
+    fetch(:app_setup_aditional, [])
+  end
+
+  def fetch_user
+    fetch(:user, 'app')
+  end
+
+  def fetch_group
+    fetch(:group, 'app')
+  end
 
   def default_rails_environments_hash
     default_rails_environments.inject({}){|r, v| r.merge Hash[v, {}] }

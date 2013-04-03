@@ -28,7 +28,7 @@ Capistrano::Configuration.instance(:must_exist).load do
         'adapter'   => fetch(:database_adapter, 'mysql2'),
         'encoding'  => fetch(:database_encoding, 'utf8'),
         'reconnect' => fetch(:database_reconnect, false),
-        'username'  => fetch(:database_username) { user },
+        'username'  => fetch(:database_username) { fetch_user },
         'password'  => self[:database_password],
         'host'      => fetch(:database_host, '127.0.1.1')
       }

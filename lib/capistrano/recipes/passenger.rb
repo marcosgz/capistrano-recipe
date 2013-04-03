@@ -39,7 +39,7 @@ Capistrano::Configuration.instance(:must_exist).load do
           run "mkdir -p #{_passenger_sites_available} #{_passenger_sites_enabled}"
           set(:recipe_settings) { passenger_template_settings }
           put template.render(_passenger_template), _passenger_available_vhost
-          # passenger.enable
+          passenger.enable
         else
           puts "[FATAL] - Passenger template settings were not found"
           abort
@@ -79,11 +79,11 @@ Capistrano::Configuration.instance(:must_exist).load do
   end
 
   def _passenger_sites_available
-    fetch(:passenger_sites_available, "/home/#{user}/configs/apache/sites-available")
+    fetch(:passenger_sites_available, "/home/#{fetch_user}/configs/apache/sites-available")
   end
 
   def _passenger_sites_enabled
-    fetch(:passenger_sites_enabled, "/home/#{user}/configs/apache/sites-enabled")
+    fetch(:passenger_sites_enabled, "/home/#{fetch_user}/configs/apache/sites-enabled")
   end
 
   def _passenger_template

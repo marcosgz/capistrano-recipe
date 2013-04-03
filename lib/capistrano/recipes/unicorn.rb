@@ -70,8 +70,8 @@ Capistrano::Configuration.instance(:must_exist).load do
       'workers_timeout'  => fetch(:unicorn_workers_timeout, 30),
       # Workers are started with this user/group
       # By default we get the user/group set in capistrano.
-      'user'              => fetch(:unicorn_user) { user },
-      'group'             => fetch(:unicorn_group) { group },
+      'user'              => fetch(:unicorn_user) { fetch_user },
+      'group'             => fetch(:unicorn_group) { fetch_group },
       'rails_env'         => fetch(:rails_env, 'production'),
       # configs for the monit template
       'pids_root'         => _unicorn_pids_root,
@@ -130,7 +130,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   end
 
   def _monit_root
-    fetch(:monit_root) { "/home/#{user}/monit" }
+    fetch(:monit_root) { "/home/#{fetch_user}/monit" }
   end
 
   def _monit_remote_file
