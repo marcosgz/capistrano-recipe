@@ -1,32 +1,4 @@
-# Example
-# =======
-#
-# passenger_setup_settings:
-#   port: 80
-#   auth_user_file: '/path/to/htpasswd'
-
 Capistrano::Configuration.instance(:must_exist).load do
-
-  # task: `passenger:setup'
-  def passenger_template_settings
-    fetch(:passenger_setup_settings, {}).reverse_merge({
-      'sites_available'   => fetch(:apache_sites_available, "/home/#{user}/configs/apache/sites-available"),
-      'sites_enabled'     => fetch(:apache_sites_enabled, "/home/#{user}/configs/apache/sites-enabled"),
-      'vhost_filename'    => fetch(:apache_vhost_filename) { "#{application}.conf" },
-      'template_filename' => fetch(:apache_template_filename) { 'passenger.conf.erb' },
-      'server_name'       => fetch(:domain),
-      'document_root'     => File.join(fetch(:current_path), 'public'),
-      'rails_env'         => fetch(:rails_env, 'production')
-    })
-  end
-
-  def apache_available_vhost
-    File.join(*passenger_template_settings.slice('sites_available', 'vhost_filename').values)
-  end
-
-  def apache_enabled_vhost
-    File.join(*passenger_template_settings.slice('sites_enabled', 'vhost_filename').values)
-  end
 
   namespace :passenger do
     desc "Restart Rails app running under Phusion Passenger by touching restart.txt"
@@ -47,27 +19,27 @@ Capistrano::Configuration.instance(:must_exist).load do
     desc "Remove passenger config"
     task :remove, :roles => :app, :except => { :no_release => true } do
       passenger.disable
-      run "rm #{apache_available_vhost}"
+      run "rm #{_passenger_available_vhost}"
     end
 
     desc "Disable passenger config"
     task :disable, :roles => :app, :except => { :no_release => true } do
-      run "rm #{apache_enabled_vhost}"
+      run "rm #{_passenger_enabled_vhost}"
     end
 
     desc "Enable passenger config"
     task :enable, :roles => :app, :except => { :no_release => true } do
-      run "ln -nsf #{apache_available_vhost} #{apache_enabled_vhost}"
+      run "ln -nsf #{_passenger_available_vhost} #{_passenger_enabled_vhost}"
     end
 
     namespace :setup do
       desc "Upload configs"
       task :default, :roles => :app do
         if exists?(:passenger_setup_settings)
-          run "mkdir -p #{ passenger_template_settings.slice('sites_available', 'sites_enabled').map{|k,v| v}.join(' ') }"
+          run "mkdir -p #{_passenger_sites_available} #{_passenger_sites_enabled}"
           set(:recipe_settings) { passenger_template_settings }
-          put template.render( passenger_template_settings['template_filename'] ), apache_available_vhost
-          passenger.enable
+          put template.render(_passenger_template), _passenger_available_vhost
+          # passenger.enable
         else
           puts "[FATAL] - Passenger template settings were not found"
           abort
@@ -80,5 +52,41 @@ Capistrano::Configuration.instance(:must_exist).load do
       end
     end
 
+  end
+
+  def passenger_setup_defaults
+    HashWithIndifferentAccess.new({
+      'server_name'       => fetch(:domain),
+      'document_root'     => File.join(current_path, 'public'),
+      'rails_env'         => fetch(:rails_env, 'production')
+    })
+  end
+
+  def passenger_template_settings
+    passenger_setup_defaults.deep_merge(HashWithIndifferentAccess.new(fetch(:passenger_setup_settings, {})))
+  end
+
+  def _passenger_available_vhost
+    File.join(_passenger_sites_available, _passenger_vhost_filename)
+  end
+
+  def _passenger_enabled_vhost
+    File.join(_passenger_sites_enabled, _passenger_vhost_filename)
+  end
+
+  def _passenger_vhost_filename
+    fetch(:passenger_vhost_filename) { "#{application}.conf" }
+  end
+
+  def _passenger_sites_available
+    fetch(:passenger_sites_available, "/home/#{user}/configs/apache/sites-available")
+  end
+
+  def _passenger_sites_enabled
+    fetch(:passenger_sites_enabled, "/home/#{user}/configs/apache/sites-enabled")
+  end
+
+  def _passenger_template
+    fetch(:passenger_template, 'passenger.conf.erb')
   end
 end

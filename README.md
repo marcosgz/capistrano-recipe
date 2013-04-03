@@ -10,6 +10,7 @@ require 'capistrano/recipe'
 ```ruby
 set :user, 'admin'
 set :group, 'admin'
+set :domain, 'www.example.com'
 ```
 
 ### Database
@@ -50,5 +51,12 @@ set :newrelic_setup_settings, {
   staging: {
     app_name: 'AppName (Staging)'
   }
+}
+```
+
+### Passenger
+```ruby
+set :passenger_setup_settings, {
+  port: 80
 }
 ```
