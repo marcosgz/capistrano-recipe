@@ -90,3 +90,9 @@ set :shards_setup_settings, {
 }
 ```
 
+### Thin
+```ruby
+set :thin_setup_settings, {
+  port: 80
+}
+```
