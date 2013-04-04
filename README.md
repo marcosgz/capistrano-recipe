@@ -94,7 +94,6 @@ set :settler_setup_settings, {
     typecast: 'password'
   }
 }
-
 ```
 
 ### Shards
@@ -126,5 +125,26 @@ set :uploader_setup_settings, {
     },
     fog_directory: 'public_assets'
   }
+}
+```
+
+### Sunspot
+```ruby
+set :sunspot_setup_settings, {
+  common: {
+    solr: {
+      path: '/solr/foo'
+    }
+  },
+  development: {
+    log_level: 'INFO'
+  }
+}
+```
+
+### Resque
+```ruby
+set :resque_setup_settings, {
+  'production' => 'example.com:6379'
 }
 ```

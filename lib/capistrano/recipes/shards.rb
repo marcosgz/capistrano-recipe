@@ -5,10 +5,10 @@ Capistrano::Configuration.instance(:must_exist).load do
       task :default, :roles => :app do
         if exists?(:shards_setup_settings)
           set(:recipe_settings) do
-            HashWithIndifferentAccess.new({
+            {
               'main' => database_template_settings,
               'shards' => shards_template_settings
-            })
+            }
           end
           put template.render(_shards_template), _shards_remote_path
         else
