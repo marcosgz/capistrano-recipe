@@ -19,12 +19,12 @@ Capistrano::Configuration.instance(:must_exist).load do
     desc "Remove passenger config"
     task :remove, :roles => :app, :except => { :no_release => true } do
       passenger.disable
-      run "rm #{_passenger_available_vhost}"
+      run "if [ -e #{_passenger_available_vhost} ]; then rm #{_passenger_available_vhost}; fi"
     end
 
     desc "Disable passenger config"
     task :disable, :roles => :app, :except => { :no_release => true } do
-      run "rm #{_passenger_enabled_vhost}"
+      run "if [ -e #{_passenger_enabled_vhost} ]; then rm #{_passenger_enabled_vhost}; fi"
     end
 
     desc "Enable passenger config"
