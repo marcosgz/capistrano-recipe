@@ -27,8 +27,6 @@ Capistrano::Configuration.instance(:must_exist).load do
 
   def shards_setup_defaults
     HashWithIndifferentAccess.new({
-      'replicated'        => true,
-      'verify_connection' => true,
       'environments'      => %w(production),
       'databases'         => {}
     })
