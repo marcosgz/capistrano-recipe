@@ -3,11 +3,12 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "marcosgz-cap-recipe"
-  s.version     = "0.0.11"
+  s.version     = "0.0.13"
   s.authors     = ["Marcos G. Zimmermann"]
   s.email       = ["mgzmaster@gmail.com"]
   s.homepage    = "https://github.com/marcosgz/capistrano-recipe"
   s.summary     = %q{Capistrano recipe}
+  s.license     = 'MIT'
 
   s.rubyforge_project = "capistrano-recipe"
 
