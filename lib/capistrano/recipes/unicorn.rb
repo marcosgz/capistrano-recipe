@@ -77,6 +77,7 @@ Capistrano::Configuration.instance(:must_exist).load do
       'pids_root'         => _unicorn_pids_root,
       'application'       => fetch(:application),
       'current_path'      => current_path,
+      'shared_path'       => shared_path,
       'remote_config'     => _unicorn_current_file
     })
   end
